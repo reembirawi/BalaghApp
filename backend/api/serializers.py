@@ -1,15 +1,16 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import Complaint, Suggestion
-class UserSerializer(serializers.ModelSerializer):
-    national_id = serializers.CharField(source='username')
 
+
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'national_id', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ["id", "username", "password"]
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
+        print(validated_data)
         user = User.objects.create_user(**validated_data)
         return user
     
